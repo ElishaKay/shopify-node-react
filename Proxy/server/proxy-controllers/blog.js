@@ -465,7 +465,7 @@ exports.listAllBlogsCategoriesTags = async (req, res) => {
                     let blogsToReturn = [];
 
                     blogs.forEach((blog, index)=>{
-                        Comment.count({shopifyDomain: blog.shopifyDomain, postSlug: blog.slug})
+                        Comment.count({shopifyDomain: blog.shopifyDomain, hidden: false, postSlug: blog.slug})
                         .exec((err, data) => {
                             console.log('data in commentCount func', data)
                             let indBlog = JSON.parse(JSON.stringify(blogs[index]));
