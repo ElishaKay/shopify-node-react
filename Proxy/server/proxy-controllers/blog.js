@@ -467,23 +467,27 @@ exports.listAllBlogsCategoriesTags = async (req, res) => {
                     // return all blogs categories tags
                     let blogsToReturn = [];
 
-                    blogs.forEach((blog, index)=>{
-                        Comment.count({shopifyDomain: blog.shopifyDomain, hidden: false, postSlug: blog.slug})
-                        .exec((err, data) => {
-                            console.log('data in commentCount func', data)
-                            let indBlog = JSON.parse(JSON.stringify(blogs[index]));
-                            indBlog.commentCount = data;
-                            blogsToReturn.push(indBlog)
-                            console.log('indBlog',indBlog)
-                            if(blogs.length-1==index){
-                                if(!shop){
-                                    res.setHeader('content-type', 'text/html');
-                                    return res.send(`<!doctype html><html lang="en">`+blogsList({ shop, blogs: blogsToReturn, tags, size: blogs.length })+`</html>`);
+                    if(blogs && blogs.length){
+                        blogs.forEach((blog, index)=>{
+                        Comment.count({shopifyDomain: blog.shopifyDomain, postSlug: blog.slug})
+                            .exec((err, data) => {
+                                console.log('data in commentCount func', data)
+                                let indBlog = JSON.parse(JSON.stringify(blogs[index]));
+                                indBlog.commentCount = data;
+                                blogsToReturn.push(indBlog)
+                                console.log('indBlog',indBlog)
+                                if(blogs.length-1==index){
+                                    if(!shop){
+                                        res.setHeader('content-type', 'text/html');
+                                        return res.send(`<!doctype html><html lang="en">`+blogsList({ shop, blogs: blogsToReturn, tags, size: blogs.length })+`</html>`);
+                                    }
+                                    res.send(blogsList({ shop, blogs: blogsToReturn, tags, size: blogs.length }));
                                 }
-                                res.send(blogsList({ shop, blogs: blogsToReturn, tags, size: blogs.length }));
-                            }
-                        })    
-                    })
+                            })    
+                        })   
+                    } else {
+                        res.send(blogsList({ shop, blogs: blogsToReturn, tags, size: blogs.length }));
+                    }
 
                     
                 });
