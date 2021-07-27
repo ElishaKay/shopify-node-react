@@ -66,7 +66,7 @@ const blogSchema = new mongoose.Schema(
         },
         userNotified: {
             type: Boolean,
-            default: false
+            default: true
         }
     },
     { timestamps: true }
