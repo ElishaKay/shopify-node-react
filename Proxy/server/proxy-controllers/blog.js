@@ -476,12 +476,23 @@ exports.listAllBlogsCategoriesTags = async (req, res) => {
                                 indBlog.commentCount = data;
                                 blogsToReturn.push(indBlog)
                                 console.log('indBlog',indBlog)
-                                if(blogs.length-1==index){
-                                    if(!shop){
-                                        res.setHeader('content-type', 'text/html');
-                                        return res.send(`<!doctype html><html lang="en">`+blogsList({ shop, blogs: blogsToReturn, tags, size: blogs.length })+`</html>`);
-                                    }
-                                    res.send(blogsList({ shop, blogs: blogsToReturn, tags, size: blogs.length }));
+                                let myIntervalLoop = setInterval(allBlogsReady, 250);
+
+                                function allBlogsReady() {
+                                    if(blogs.length==blogsToReturn.length){
+                                        if(!shop){
+                                            res.setHeader('content-type', 'text/html');
+                                            return res.send(`<!doctype html><html lang="en">`+blogsList({ shop, blogs: blogsToReturn, tags, size: blogs.length })+`</html>`);
+                                            myStopFunction()
+                                        } else {
+                                            res.send(blogsList({ shop, blogs: blogsToReturn, tags, size: blogs.length }));
+                                            myStopFunction()
+                                        }
+                                    }    
+                                }
+                                
+                                function myStopFunction() {
+                                  clearInterval(myIntervalLoop);
                                 }
                             })    
                         })   
