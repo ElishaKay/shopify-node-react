@@ -95,7 +95,7 @@ const Tag = (props) => {
     return (
         <React.Fragment>
             <Layout.AnnotatedSection
-                title="Manage Tags"
+                title="Manage Topics"
                 description="Create new tags which will be featured in your Social Network."
               >
               {error && error.toLowerCase().includes('slug_1_shop') ? 'Tag Slug Already Exists' : ''}

@@ -105,6 +105,7 @@ module.exports.createNewPostJS = ({shop, tags}) => {
           header: Header,
           image: {
               class: ImageTool,
+              inlineToolbar: true,
               config: {
                 endpoints: {
                   byFile: '${proxyRoute}/upload?email={{ customer.email }}&name={{ customer.name }}&hash={{ customer.email | append: 'somecrazyhash' | md5 }}', // Your backend file uploader endpoint

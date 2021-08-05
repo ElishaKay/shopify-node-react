@@ -150,7 +150,7 @@ const ManagePosts = (props) => {
                               <List.Item>
                                 Drive the conversation around specific topics by {' '}
                                 <Button primary url={`/manage/manage-tags`}>
-                                     Adding Tags   
+                                     Adding Topics   
                                 </Button>
                               </List.Item>
                               <List.Item>Customize the Look & Feel of Your Network with {' '}
